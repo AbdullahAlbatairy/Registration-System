@@ -1,0 +1,16 @@
+<ul class="list-group">
+    <div *ngFor="let tempCourse of courses">
+      <li class="list-group-item">
+        {{tempCourse.courseName}}
+
+        <button (click)="getAllStudentsForCourseForInstructor(tempCourse.id)">View Students</button>
+       
+  
+      </li>
+    </div>
+  </ul>
+
+
+  <div *ngIf="isViewingStudents">
+    <app-instructor-student-list [students]="students"></app-instructor-student-list>
+  </div>

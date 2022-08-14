@@ -1,0 +1,48 @@
+<form [formGroup]="addStudent" (ngSubmit)="onAddingStudent()">
+    <div>
+        <input type="email" id="email" formControlName="email" placeholder="Student Email">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+    *ngIf="!addStudent.get('email')?.valid && addStudent.get('email')?.touched || addStudent.get('email')?.value == null"
+    class="help-block">Please enter a valid email</span>
+    </div>
+    
+    <br>
+    <div>
+
+        <input type="text" id="firstName" formControlName="firstName" placeholder="First Name">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+    *ngIf="!addStudent.get('firstName')?.valid && addStudent.get('firstName')?.touched || addStudent.get('firstName')?.value == null"
+    class="help-block">Please enter a valid firstName</span>
+    </div>
+    
+    <br>
+    <div>
+
+        <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+    *ngIf="!addStudent.get('lastName')?.valid && addStudent.get('lastName')?.touched || addStudent.get('lastName')?.value == null"
+    class="help-block">Please enter a valid lastName</span>
+    </div>
+    
+    <br>
+    <div>
+
+        <input type="text" id="password" formControlName="password" placeholder="Password">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+        *ngIf="!addStudent.get('password')?.valid && addStudent.get('password')?.touched || addStudent.get('password')?.value == null"
+        class="help-block">Please enter a valid password</span>
+    </div>
+    
+    <br>
+
+    <button (click)="isClicked = true" type="submit">Add Student</button>
+
+</form>

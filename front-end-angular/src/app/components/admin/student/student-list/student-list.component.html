@@ -1,0 +1,36 @@
+<ul class="list-group">
+    <div *ngFor="let tempStudent of students">
+      <li class="list-group-item">
+        {{tempStudent.firstName}} {{tempStudent.lastName}}
+
+        <button mat-raised-button color="primary"
+        (click)="editing(tempStudent)">Edit</button>
+        /  
+        <button mat-raised-button color="primary"
+          (click)="deleteAStudent(tempStudent)">Delete</button>
+
+      </li>
+    </div>
+  </ul>
+
+
+  <br>
+
+
+<!-- <button class="float-right" routerLink="course-add">Add</button> -->
+<button class="float-right" (click)="adding()">Add</button>
+
+<div *ngIf="isAdding">
+  <app-admin-student-add (newStudent)="updateAddedStudents($event)"></app-admin-student-add>
+</div>
+
+<div *ngIf="isEditing">
+  <app-admin-student-edit 
+  [studentId]="student.id" 
+  [email]="student.email" 
+  [firstName]="student.firstName" 
+  [lastName]="student.lastName" 
+  [password]="student.password"
+  [courses]="student.courses"
+  (editedStudentInfo)="updateEditedStudent($event)"></app-admin-student-edit>
+</div>

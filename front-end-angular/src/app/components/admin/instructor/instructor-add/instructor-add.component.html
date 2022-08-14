@@ -1,0 +1,47 @@
+<form [formGroup]="addInstructor" (ngSubmit)="onAddingInstructor()">
+    
+    <div>
+
+        <input type="email" id="email" formControlName="email" placeholder="Instructor Email">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+    *ngIf="!addInstructor.get('email')?.valid && addInstructor.get('email')?.touched || addInstructor.get('email')?.value == null"
+    class="help-block">Please enter a valid email</span>
+    </div>
+    <br>
+    <div>
+
+        <input type="text" id="firstName" formControlName="firstName" placeholder="First Name">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+    *ngIf="!addInstructor.get('firstName')?.valid && addInstructor.get('firstName')?.touched || addInstructor.get('firstName')?.value == null"
+    class="help-block">Please enter a valid firstName</span>
+    </div>
+    <br>
+    <div>
+        
+        <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+    *ngIf="!addInstructor.get('lastName')?.valid && addInstructor.get('lastName')?.touched || addInstructor.get('lastName')?.value == null"
+    class="help-block">Please enter a valid lastName</span>
+    </div>
+    <br>
+    <div>
+        
+        <input type="password" id="password" formControlName="password" placeholder="Password">
+    </div>
+    <div *ngIf="isClicked">
+        <span
+        *ngIf="!addInstructor.get('password')?.valid && addInstructor.get('password')?.touched || addInstructor.get('password')?.value == null"
+        class="help-block">Please enter a valid password</span>
+    </div>
+    <br>
+    
+
+    <button (click)="isClicked = true" type="submit">Add Instructor</button>
+
+</form>

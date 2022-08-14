@@ -1,0 +1,133 @@
+<!-- <ul class="list-group">
+  <div *ngFor="let tempCourse of courses">
+    <li class="list-group-item">
+      {{tempCourse.courseName}}
+      <button mat-raised-button color="primary"
+        (click)="editing(tempCourse.id, tempCourse.courseName, tempCourse.courseDesc)">Edit</button>
+      /
+      <button mat-raised-button color="primary" (click)="deleteACourse(tempCourse)">Delete</button>
+
+      /
+      <button mat-raised-button color="primary" (click)="addAnInstructor(tempCourse.id)">Add Instructor(s)</button>
+      /
+      <button mat-raised-button color="primary" (click)="viewInstructors(tempCourse.id)">View Instructor(s)</button>
+      /
+      <button mat-raised-button color="primary" (click)="addAStudent(tempCourse.id)">Add student(s)</button>
+      /
+      <button mat-raised-button color="primary" (click)="viewStudents(tempCourse.id)">View student(s)</button>
+
+    </li>
+  </div>
+</ul>
+
+<br>
+
+
+<button class="float-right" (click)="adding()">Add</button>
+
+<div *ngIf="isAdding">
+  <app-admin-course-add (newCourse)="updateAddedCourses($event)"></app-admin-course-add>
+</div>
+
+<div *ngIf="isEditing">
+  <app-admin-course-edit [courseId]="currentId" [courseName]="courseName" [courseDesc]="courseDesc"
+    (editedCourse)="updateEditedCourses($event)"></app-admin-course-edit>
+</div>
+
+<div *ngIf="isAddingInstructor">
+  <app-admin-course-instructors-add [courseId]="courseId"></app-admin-course-instructors-add>
+</div>
+
+<div *ngIf="isViewingInstructor">
+  <app-admin-course-instructor-list [courseId]="courseId"></app-admin-course-instructor-list>
+</div>
+
+<div *ngIf="isAddingStudent">
+  <app-admin-course-student-add [courseId]="courseId"></app-admin-course-student-add>
+</div>
+
+<div *ngIf="isViewingStudent">
+  <app-admin-course-student-list [courseId]="courseId"></app-admin-course-student-list>
+</div>  -->
+
+
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
+      <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
+    </ng-template>
+
+    
+  </p-toolbar>
+
+  <p-table #dt [value]="courses" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'description']" responsiveLayout="scroll" 
+  [(selection)]="selectedCourses" [rowHover]="true" dataKey="id"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+  
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Manage Courses</h5>
+        <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt.filterGlobal($any($event).target.value, 'contains')" placeholder="Search..." />
+        </span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+        <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="Name">Name <p-sortIcon field="courseName"></p-sortIcon></th>
+        <th pSortableColumn="Description">Description <p-sortIcon field="courseDesc"></p-sortIcon></th>
+        
+    </tr>
+</ng-template>
+
+<ng-template pTemplate="body" let-course>
+  <tr >
+      <td>
+          <p-tableCheckbox [value]="course"></p-tableCheckbox>
+      </td>
+      <td>{{ course.courseName }}</td>
+      <td>{{ course.courseDesc }}</td>
+      <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCourse(course)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCourse(course)"></button>
+    </td>
+  </tr>
+</ng-template>
+<ng-template pTemplate="summary">
+  <div class="flex align-items-center justify-content-between">
+      In total there are {{courses ? courses.length : 0 }} products.
+  </div>
+</ng-template>
+
+  </p-table>
+
+
+</div>
+
+<p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="course.courseName" required autofocus />
+      <small class="p-error" *ngIf="submitted && !course.courseName">Name is required.</small>
+  </div>
+  <div class="field">
+    <label for="description">Description</label>
+    <textarea id="description" pInputTextarea [(ngModel)]="course.courseDesc" required rows="3" cols="20"></textarea>
+</div>
+
+  </ng-template>
+</p-dialog>
+
+
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+

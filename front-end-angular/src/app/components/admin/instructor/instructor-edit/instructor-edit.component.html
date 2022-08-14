@@ -1,0 +1,9 @@
+<form [formGroup]="editInstructor" (ngSubmit)="onEditingInstructor()">
+    <input type="email" id="email" formControlName="email" placeholder="Instructor Email">
+    <input type="text" id="firstName" formControlName="firstName" placeholder="First Name">
+    <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
+    <input type="password" id="password" formControlName="password" placeholder="Password">
+
+    <button type="submit">Edit Instructor</button>
+
+</form>

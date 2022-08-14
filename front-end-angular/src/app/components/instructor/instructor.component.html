@@ -1,0 +1,9 @@
+<app-navbar></app-navbar>
+<button (click)="viewingCourses = !viewingCourses">Courses</button>
+
+<div *ngIf="viewingCourses">
+    
+    <app-instructor-course-list></app-instructor-course-list>
+
+</div>
+

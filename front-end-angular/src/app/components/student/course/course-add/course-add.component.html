@@ -1,0 +1,11 @@
+<ul class="list-group">
+    <div *ngFor="let tempCourse of courses">
+      <li class="list-group-item">
+        {{tempCourse.courseName}}   
+        /
+        <button (click)="addNewCourseToStudent(tempCourse)">Add</button>
+        
+  
+      </li>
+    </div>
+</ul>

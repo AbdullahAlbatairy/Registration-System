@@ -1,0 +1,12 @@
+<ul class="list-group">
+    <div *ngFor="let tempStudent of students">
+      <li class="list-group-item">
+        {{tempStudent.firstName}}
+        {{tempStudent.lastName}}
+
+        <button mat-raised-button color="primary"
+        (click)="deleteStudentFromCourse(tempStudent.id)">Delete</button>
+        
+        </li>
+    </div>
+  </ul>

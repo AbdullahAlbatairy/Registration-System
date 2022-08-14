@@ -1,0 +1,8 @@
+<form [formGroup]="editCourse" (ngSubmit)="onEditingCourse()">
+
+    <input type="text" id="name" formControlName="courseName" [value]="courseName">
+    <input type="text" id="desc" formControlName="courseDesc" [value]="courseDesc">
+
+    <button type="submit">Edit Course</button>
+
+</form>
