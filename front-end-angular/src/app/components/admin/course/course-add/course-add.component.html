@@ -1,4 +1,6 @@
-<form [formGroup]="addCourse" (ngSubmit)="onAddingCourse()">
+<!-- <form [formGroup]="addCourse" (ngSubmit)="onAddingCourse()">
+
+    
    
    <div>
 
@@ -23,4 +25,40 @@ class="help-block">Please enter a valid Course Description</span>
 
     <button  (click)="isClicked = true" type="submit">Add Course</button>
 
-</form>
+</form> -->
+
+<p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true"
+styleClass="p-fluid">
+    <form [formGroup]="addCourse">
+        <div>
+
+            <input pInputText type="text" id="name" formControlName="courseName" placeholder="Course Name" required
+                autofocus>
+        </div>
+        <div *ngIf="isClicked">
+            <small class="p-error"
+                *ngIf="!addCourse.get('courseName')?.valid && addCourse.get('courseName')?.touched || addCourse.get('courseName')?.value == null"
+                class="help-block">Please enter a valid Course Name</small>
+        </div>
+        <br>
+        <div>
+
+            <input pInputText type="text" id="desc" formControlName="courseDesc" placeholder="Course Desc" required
+                autofocus>
+        </div>
+        <div *ngIf="isClicked">
+            <small class="p-error"
+                *ngIf="!addCourse.get('courseDesc')?.valid && addCourse.get('courseDesc')?.touched || addCourse.get('courseDesc')?.value == null"
+                class="help-block">Please enter a valid Course Description</small>
+        </div>
+
+
+        
+
+    </form>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="onAddingCourse()"></button>
+    </ng-template>
+</p-dialog>

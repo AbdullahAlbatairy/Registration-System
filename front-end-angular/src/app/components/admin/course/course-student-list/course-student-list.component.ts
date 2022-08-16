@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Student } from 'src/app/models/student.model';
 import { AdminCourseService } from 'src/app/services/admin/course/course.service';
 
@@ -9,9 +10,12 @@ import { AdminCourseService } from 'src/app/services/admin/course/course.service
 })
 export class AdminCourseStudentListComponent implements OnChanges {
   @Input() courseId?: number;
+  @Input() studentDialog: boolean;
   students: Student[];
 
-  constructor(private courseService: AdminCourseService) { }
+  constructor(private courseService: AdminCourseService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnChanges(): void {
     this.getAllStudentsForCourseRegistered();
@@ -28,11 +32,20 @@ export class AdminCourseStudentListComponent implements OnChanges {
   }
 
   deleteStudentFromCourse(studentId?: number) {
-    this.courseService.deleteStudentFromCourse(studentId, this.courseId).subscribe(
-      () => {
-        this.getAllStudentsForCourseRegistered();
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ?',
+      header: 'Delete Instructor',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.courseService.deleteStudentFromCourse(studentId, this.courseId).subscribe(
+          () => {
+            this.getAllStudentsForCourseRegistered();
+          }
+        )
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Student deleted from Course', life: 3000 });
       }
-    )
+    });
+
 
   }
 }

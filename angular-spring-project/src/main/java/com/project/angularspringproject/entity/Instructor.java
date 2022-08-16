@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 public class Instructor extends User{
 	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+			cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name = "course_instructor", joinColumns = @JoinColumn(name = "instructor_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     @JsonBackReference
 	private List<Course> courses;

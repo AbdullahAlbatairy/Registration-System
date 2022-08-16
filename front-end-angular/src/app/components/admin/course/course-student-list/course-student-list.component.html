@@ -1,4 +1,4 @@
-<ul class="list-group">
+<!-- <ul class="list-group">
     <div *ngFor="let tempStudent of students">
       <li class="list-group-item">
         {{tempStudent.firstName}}
@@ -9,4 +9,25 @@
         
         </li>
     </div>
-  </ul>
+  </ul> -->
+
+<p-dialog [(visible)]="studentDialog" [style]="{width: '450px'}" header="Instructors" [modal]="true"
+  styleClass="p-fluid">
+
+  <p-table [value]="students">
+
+
+    <ng-template pTemplate="body" let-student>
+      <tr>
+        <td>{{ student.firstName }} {{ student.lastName }}
+        </td>
+        <td></td>
+        <td><button pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-rounded mr-2"
+            (click)="deleteStudentFromCourse(student.id)"></button></td>
+      </tr>
+
+    </ng-template>
+  </p-table>
+
+
+</p-dialog>

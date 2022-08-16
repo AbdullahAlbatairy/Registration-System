@@ -48,6 +48,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 
 const routes: Routes = [
@@ -119,6 +120,7 @@ const routes: Routes = [
     InputTextModule,
     InputTextareaModule,
     ConfirmDialogModule,
+    TabMenuModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes)
 

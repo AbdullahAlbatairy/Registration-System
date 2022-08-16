@@ -56,7 +56,7 @@ public class InstructorRestController {
 
 	@PutMapping("/instructor-edit")
 	public void update(@RequestBody Instructor instructor) {
-		this.instructorService.save(instructor);
+		this.instructorService.update(instructor);
 	}
 
 	@DeleteMapping("/instructor-delete/{id}")

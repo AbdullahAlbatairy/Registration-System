@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Course } from 'src/app/models/course.model';
 import { AdminCourseService } from 'src/app/services/admin/course/course.service';
 
@@ -9,13 +11,15 @@ import { AdminCourseService } from 'src/app/services/admin/course/course.service
   styleUrls: ['./course-add.component.css']
 })
 export class AdminCourseAddComponent implements OnInit {
+  @Input() courseDialog: boolean;
+  submitted: boolean;
   addCourse: FormGroup;
-  course: Course; 
+  @Input() course: Course; 
   isClicked = false;
   @Output() newCourse = new EventEmitter<Course>;
 
-  newCourseEvent = new EventEmitter<Course>;
-  constructor(private courseService: AdminCourseService) { }
+  
+  constructor(private courseService: AdminCourseService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.addCourse = new FormGroup({
@@ -43,9 +47,17 @@ export class AdminCourseAddComponent implements OnInit {
     this.courseService.addACourse(this.course).subscribe(
       ()=> {
           this.newCourse.emit(this.course);
+          this.courseDialog = false;
+          this.messageService.add({severity:'success', summary: 'Successful', detail: 'New Course Has been added', life: 3000});
+
       }
     );
 
+  }
+
+  hideDialog() {
+    this.courseDialog = false;
+    this.submitted = false;
   }
 
 }

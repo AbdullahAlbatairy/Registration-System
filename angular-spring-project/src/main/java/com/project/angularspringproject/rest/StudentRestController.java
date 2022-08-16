@@ -59,7 +59,7 @@ public class StudentRestController {
 	
 	@PutMapping("/student-edit")
 	public void update(@RequestBody Student student) {
-		this.studentService.save(student);
+		this.studentService.update(student);
 	}
 	@DeleteMapping("/student-delete/{id}")
 	public void deleteById(@PathVariable int id) {

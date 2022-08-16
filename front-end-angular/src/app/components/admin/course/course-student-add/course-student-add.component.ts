@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Student } from 'src/app/models/student.model';
 import { AdminCourseService } from 'src/app/services/admin/course/course.service';
 
@@ -10,10 +11,12 @@ import { AdminCourseService } from 'src/app/services/admin/course/course.service
 export class AdminCourseStudentAddComponent implements OnChanges {
   students: Student[];
   @Input() courseId?: number;
-  constructor(private courseService: AdminCourseService) { }
+  @Input() studentDialog: boolean;
+  constructor(private courseService: AdminCourseService,
+    private messageService: MessageService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.getAllStudentsForACourse(this.courseId);
+    this.getAllStudentsForACourse(this.courseId);
   }
 
   getAllStudentsForACourse(courseId?: number) {
@@ -28,10 +31,12 @@ export class AdminCourseStudentAddComponent implements OnChanges {
 
 
 
-  addStudentToCourse(studentId?: number){
+  addStudentToCourse(studentId?: number) {
     this.courseService.addStudentToCourse(studentId, this.courseId).subscribe(
       () => {
         this.getAllStudentsForACourse(this.courseId);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Student added to the Course', life: 3000 });
+
       }
     )
 

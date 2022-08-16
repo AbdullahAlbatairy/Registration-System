@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Instructor } from 'src/app/models/instructor.model';
 import { AdminInstructorService } from 'src/app/services/admin/instructor/instructor.service';
 
@@ -10,13 +12,18 @@ import { AdminInstructorService } from 'src/app/services/admin/instructor/instru
 export class AdminInstructorListComponent implements OnInit {
 
   instructors: Instructor[];
+  instructor: Instructor;
+  instructorDialog = false;
 
   isAdding = false;
   isEditing = false;
 
   //data binding
-  instructor = new Instructor;
-  constructor(private instructorService: AdminInstructorService) { }
+  // instructor = new Instructor;
+  constructor(private instructorService: AdminInstructorService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getAllInstructors();
@@ -31,17 +38,41 @@ export class AdminInstructorListComponent implements OnInit {
     )
   }
 
-  deleteAnInstructor(instructor: Instructor) {
-    this.isEditing = false;
+  editingInstructor(instructor: Instructor) {
+    this.isEditing = true;
     this.isAdding = false;
-    this.instructorService.deleteAnInstructor(instructor.id).subscribe(
-      () => {
-        this.updateDeletedInstructor(instructor)
-      }
-    )
+    this.instructor = { ...instructor }
+    this.instructorDialog = true;
+
   }
 
-  updateAddedInstructors(instructor: Instructor) {
+  deleteInstructor(instructor: Instructor) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + instructor.firstName + ' ' + instructor.lastName + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.instructorService.deleteAnInstructor(instructor.id).subscribe(
+          () => {
+            this.updateDeletedInstructor(instructor)
+          }
+        )
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Instructor Deleted', life: 3000 });
+      }
+    });
+  }
+
+  // deleteAnInstructor(instructor: Instructor) {
+  //   this.isEditing = false;
+  //   this.isAdding = false;
+  //   this.instructorService.deleteAnInstructor(instructor.id).subscribe(
+  //     () => {
+  //       this.updateDeletedInstructor(instructor)
+  //     }
+  //   )
+  // }
+
+  updateAddedInstructors() {
     this.getAllInstructors();
   }
 
@@ -60,24 +91,27 @@ export class AdminInstructorListComponent implements OnInit {
 
   }
 
-  editing(instructor: Instructor) {
-    this.instructor.id = instructor.id;
-    this.instructor.email = instructor.email;
-    this.instructor.firstName = instructor.firstName;
-    this.instructor.lastName = instructor.lastName;
-    this.instructor.password = instructor.password;
-    this.instructor.courses = instructor.courses;
 
-    this.isEditing = true;
-    this.isAdding = false;
 
-  }
-
-  adding() {
-    this.isAdding = !this.isAdding;
+  addingInstructor() {
+    this.isAdding = true;
     this.isEditing = false;
+    this.instructorDialog = true;
   }
 
+  logout() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to log out?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userType");
+        this.router.navigate(['']);
+      }
+    });
 
 
+
+  }
 }

@@ -52,67 +52,83 @@
 
 
 <p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
 <div class="card">
   <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
-      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"></button>
-      <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"></button>
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+        (click)="addingACourse()"></button>
     </ng-template>
 
-    
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Logout" class="p-button-danger mr-2" (click)="logout()"></button>
+    </ng-template>
+
+
   </p-toolbar>
 
-  <p-table #dt [value]="courses" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'description']" responsiveLayout="scroll" 
-  [(selection)]="selectedCourses" [rowHover]="true" dataKey="id"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-  
-  <ng-template pTemplate="caption">
-    <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Manage Courses</h5>
-        <span class="p-input-icon-right">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt.filterGlobal($any($event).target.value, 'contains')" placeholder="Search..." />
-        </span>
-    </div>
-  </ng-template>
+  <p-table #dt [value]="courses" [rows]="10" [paginator]="true"
+    responsiveLayout="scroll" [(selection)]="selectedCourses" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
 
-  <ng-template pTemplate="header">
-    <tr>
-        <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
-        <th pSortableColumn="Name">Name <p-sortIcon field="courseName"></p-sortIcon></th>
-        <th pSortableColumn="Description">Description <p-sortIcon field="courseDesc"></p-sortIcon></th>
-        
-    </tr>
-</ng-template>
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Courses</h5>
 
-<ng-template pTemplate="body" let-course>
-  <tr >
-      <td>
-          <p-tableCheckbox [value]="course"></p-tableCheckbox>
-      </td>
-      <td>{{ course.courseName }}</td>
-      <td>{{ course.courseDesc }}</td>
-      <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCourse(course)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCourse(course)"></button>
-    </td>
-  </tr>
-</ng-template>
-<ng-template pTemplate="summary">
-  <div class="flex align-items-center justify-content-between">
-      In total there are {{courses ? courses.length : 0 }} products.
-  </div>
-</ng-template>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+
+        <th>Name</th>
+        <th>Description</th>
+        <th>Courses</th>
+        <th>Instructors</th>
+        <th>Students</th>
+
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-course>
+      <tr>
+
+        <td>{{ course.courseName }}</td>
+        <td>{{ course.courseDesc }}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+            (click)="editCourse(course)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deleteCourse(course)"></button>
+
+        </td>
+        <td>
+          <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success mr-2"
+            (click)="addAnInstructor(course.id)"></button>
+          <button pButton pRipple icon="pi pi-user" class="p-button-rounded p-button-warning"
+            (click)="viewInstructors(course.id)"></button>
+        </td>
+        <td>
+          <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success mr-2"
+            (click)="addAStudent(course.id)"></button>
+          <button pButton pRipple icon="pi pi-user" class="p-button-rounded p-button-warning"
+            (click)="viewStudents(course.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{courses ? courses.length : 0 }} courses.
+      </div>
+    </ng-template>
 
   </p-table>
 
 
 </div>
 
-<p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true" styleClass="p-fluid">
+<!-- <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="field">
       <label for="name">Name</label>
@@ -125,9 +141,32 @@
 </div>
 
   </ng-template>
-</p-dialog>
+</p-dialog> -->
+
+<div *ngIf="isAdding">
+  <app-admin-course-add [courseDialog]="courseDialog" [course]="course" (newCourse)="updateAddedCourses($event)">
+  </app-admin-course-add>
+</div>
 
 
+<div *ngIf="isEditing">
+  <app-admin-course-edit [courseDialog]="courseDialog" [course]="course" (editedCourse)="updateEditedCourses($event)">
+  </app-admin-course-edit>
+</div>
 
-<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<div *ngIf="isAddingInstructor">
+  <app-admin-course-instructors-add [instructorDialog]="instructorDialog" [courseId]="courseId">
+  </app-admin-course-instructors-add>
+</div>
 
+<div *ngIf="isViewingInstructor">
+  <app-admin-course-instructor-list [instructorDialog]="instructorDialog" [courseId]="courseId"></app-admin-course-instructor-list>
+</div>
+
+<div *ngIf="isAddingStudent">
+  <app-admin-course-student-add [studentDialog]="studentDialog" [courseId]="courseId"></app-admin-course-student-add>
+</div>
+
+<div *ngIf="isViewingStudent">
+  <app-admin-course-student-list [studentDialog]="studentDialog" [courseId]="courseId"></app-admin-course-student-list>
+</div>  

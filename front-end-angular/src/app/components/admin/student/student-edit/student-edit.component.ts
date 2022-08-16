@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Course } from 'src/app/models/course.model';
+import { MessageService } from 'primeng/api';
 import { Student } from 'src/app/models/student.model';
 import { AdminStudentService } from 'src/app/services/admin/student/student.service';
 
@@ -10,45 +10,44 @@ import { AdminStudentService } from 'src/app/services/admin/student/student.serv
   styleUrls: ['./student-edit.component.css']
 })
 export class AdminStudentEditComponent implements OnInit {
-  student: Student;
-  @Input() studentId?: number;
-  @Input() email: string;
-  @Input() firstName: string;
-  @Input() lastName: string;
-  @Input() password: string;
-  @Input() courses?: Course[];
+  @Input() student: Student;
+  @Input() studentDialog: boolean;
+  submitted: boolean;
+
   @Output() editedStudentInfo = new EventEmitter<Student>;
   editStudent: FormGroup;
 
 
-  constructor(private studentService: AdminStudentService) { }
+  constructor(private studentService: AdminStudentService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.editStudent = new FormGroup({
-      "email": new FormControl(this.email, [Validators.required, Validators.email]),
-      "firstName": new FormControl(this.firstName, Validators.required),
-      "lastName": new FormControl(this.lastName, Validators.required),
-      "password": new FormControl(this.password, Validators.required)
+      "email": new FormControl(this.student.email, [Validators.required, Validators.email]),
+      "firstName": new FormControl(this.student.firstName, Validators.required),
+      "lastName": new FormControl(this.student.lastName, Validators.required),
 
     })
   }
 
   onEditingStudent() {
-    this.student = {
-      id: this.studentId,
-      email: this.editStudent.value.email,
-      firstName: this.editStudent.value.firstName,
-      lastName: this.editStudent.value.lastName,
-      password: this.editStudent.value.password,
-      courses: this.courses
 
-    }
+    this.student.email = this.editStudent.value.email,
+      this.student.firstName = this.editStudent.value.firstName,
+      this.student.lastName = this.editStudent.value.lastName,
 
-    this.studentService.editAStudent(this.student).subscribe(
-      () => {
-        this.editedStudentInfo.emit(this.student);
-      }
-    )
+      this.studentService.editAStudent(this.student).subscribe(
+        () => {
+          this.editedStudentInfo.emit(this.student);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Student Has been Edited', life: 3000 });
+
+        }
+      )
+  }
+
+  hideDialog() {
+    this.studentDialog = false;
+    this.submitted = false;
   }
 
 }

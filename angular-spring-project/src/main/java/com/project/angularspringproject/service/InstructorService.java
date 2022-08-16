@@ -13,9 +13,12 @@ public interface InstructorService {
 
 	public void save(Instructor instructor);
 	
+	public void update(Instructor instructor);
+	
 	public void deleteById(int id);
 
 	public List<Course> findAllCoursesForInstructor(int instructorId);
 
 	public List<Student> findAllStudentForCourseForInstructor(int courseId);
+
 }

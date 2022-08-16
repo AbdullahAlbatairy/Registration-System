@@ -61,6 +61,13 @@ public class InstructorServiceImpl implements InstructorService {
 		instructorDAO.save(instructor);
 
 	}
+	
+	@Override
+	@Transactional
+	public void update(Instructor instructor) {
+		instructorDAO.save(instructor);
+
+	}
 
 	@Override
 	@Transactional

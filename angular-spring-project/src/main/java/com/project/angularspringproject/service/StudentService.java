@@ -21,4 +21,6 @@ public interface StudentService {
 
 	public void saveCourseToStudnet(int studentId, Course course);
 
+	public void update(Student student);
+
 }

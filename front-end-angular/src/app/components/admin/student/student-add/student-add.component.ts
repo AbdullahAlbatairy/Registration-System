@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Student } from 'src/app/models/student.model';
 import { AdminStudentService } from 'src/app/services/admin/student/student.service';
 
@@ -11,9 +12,12 @@ import { AdminStudentService } from 'src/app/services/admin/student/student.serv
 export class AdminStudentAddComponent implements OnInit {
   addStudent: FormGroup;
   student: Student;
+  submitted: boolean;
+  @Input() studentDialog: boolean
   @Output() newStudent = new EventEmitter<Student>;
   isClicked = false;
-  constructor(private studentService: AdminStudentService) { }
+  constructor(private studentService: AdminStudentService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.addStudent = new FormGroup({
@@ -25,17 +29,17 @@ export class AdminStudentAddComponent implements OnInit {
   }
 
   onAddingStudent() {
-    if(this.addStudent.value.email == null 
+    if (this.addStudent.value.email == null
       || this.addStudent.value.firstName == null
       || this.addStudent.value.lastName == null
       || this.addStudent.value.password == null
-      || !this.addStudent.get('email')?.valid 
+      || !this.addStudent.get('email')?.valid
       && this.addStudent.get('email')?.touched
-      || !this.addStudent.get('firstName')?.valid 
+      || !this.addStudent.get('firstName')?.valid
       && this.addStudent.get('firstName')?.touched
-      || !this.addStudent.get('lastName')?.valid 
+      || !this.addStudent.get('lastName')?.valid
       && this.addStudent.get('lastName')?.touched
-      || !this.addStudent.get('password')?.valid 
+      || !this.addStudent.get('password')?.valid
       && this.addStudent.get('password')?.touched) return;
 
     this.student = {
@@ -48,12 +52,18 @@ export class AdminStudentAddComponent implements OnInit {
     this.studentService.addAStudent(this.student).subscribe(
       (data) => {
         this.newStudent.emit(this.student);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Student Has been added', life: 3000 });
 
-        console.log(data);
-        
+
+
       }
     );
 
+  }
+
+  hideDialog() {
+    this.studentDialog = false;
+    this.submitted = false;
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Course } from 'src/app/models/course.model';
 import { Instructor } from 'src/app/models/instructor.model';
 import { AdminInstructorService } from 'src/app/services/admin/instructor/instructor.service';
@@ -10,45 +11,46 @@ import { AdminInstructorService } from 'src/app/services/admin/instructor/instru
   styleUrls: ['./instructor-edit.component.css']
 })
 export class AdminInstructorEditComponent implements OnInit {
-  instructor: Instructor;
-  @Input() instructorId?: number;
-  @Input() email: string;
-  @Input() firstName: string;
-  @Input() lastName: string;
-  @Input() password: string;
-  @Input() courses?: Course[];
-  @Output() editedStudentInfo = new EventEmitter<Instructor>;
-  editInstructor: FormGroup;
-  constructor(private instructorService: AdminInstructorService) {
+  @Input() instructor: Instructor;
+  submitted: boolean;
+  @Input() instructorDialog: boolean;
 
-   }
+
+  @Output() editedInstructorInfo = new EventEmitter<Instructor>;
+  editInstructor: FormGroup;
+  constructor(private instructorService: AdminInstructorService,
+    private messageService: MessageService) {
+
+  }
 
   ngOnInit(): void {
     this.editInstructor = new FormGroup({
-      "email": new FormControl(this.email, [Validators.required, Validators.email]),
-      "firstName": new FormControl(this.firstName, Validators.required),
-      "lastName": new FormControl(this.lastName, Validators.required),
-      "password": new FormControl(this.password, Validators.required)
+      "email": new FormControl(this.instructor.email, [Validators.required, Validators.email]),
+      "firstName": new FormControl(this.instructor.firstName, Validators.required),
+      "lastName": new FormControl(this.instructor.lastName, Validators.required),
 
     })
   }
 
   onEditingInstructor() {
-    this.instructor = {
-      id: this.instructorId,
-      email: this.editInstructor.value.email,
-      firstName: this.editInstructor.value.firstName,
-      lastName: this.editInstructor.value.lastName,
-      password: this.editInstructor.value.password,
-      courses: this.courses
 
-    }
+    this.instructor.email = this.editInstructor.value.email,
+      this.instructor.firstName = this.editInstructor.value.firstName,
+      this.instructor.lastName = this.editInstructor.value.lastName,
 
-    this.instructorService.editAnInstructor(this.instructor).subscribe(
-      () => {
-        this.editedStudentInfo.emit(this.instructor);
-      }
-    )
+
+
+      this.instructorService.editAnInstructor(this.instructor).subscribe(
+        () => {
+          this.editedInstructorInfo.emit(this.instructor);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Instructor Has been Edited', life: 3000 });
+
+        }
+      )
+  }
+  hideDialog() {
+    this.instructorDialog = false;
+    this.submitted = false;
   }
 
 }

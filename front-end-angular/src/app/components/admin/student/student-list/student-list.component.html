@@ -1,36 +1,73 @@
-<ul class="list-group">
-    <div *ngFor="let tempStudent of students">
-      <li class="list-group-item">
-        {{tempStudent.firstName}} {{tempStudent.lastName}}
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
-        <button mat-raised-button color="primary"
-        (click)="editing(tempStudent)">Edit</button>
-        /  
-        <button mat-raised-button color="primary"
-          (click)="deleteAStudent(tempStudent)">Delete</button>
-
-      </li>
-    </div>
-  </ul>
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+        (click)="addingStudent()"></button>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Logout" class="p-button-danger mr-2" (click)="logout()"></button>
+    </ng-template>
 
 
-  <br>
+  </p-toolbar>
+
+  <p-table #dt [value]="students" [rows]="10" [paginator]="true" [globalFilterFields]="['firstName', 'lastName']"
+    responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Students</h5>
+
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+
+        <th>First Name
+        </th>
+        <th>Last Name </th>
+        <th></th>
+
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-student>
+      <tr>
+
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+            (click)="editingStudent(student)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="deleteStudent(student)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{students ? students.length : 0 }} instructors.
+      </div>
+    </ng-template>
+
+  </p-table>
 
 
-<!-- <button class="float-right" routerLink="course-add">Add</button> -->
-<button class="float-right" (click)="adding()">Add</button>
-
-<div *ngIf="isAdding">
-  <app-admin-student-add (newStudent)="updateAddedStudents($event)"></app-admin-student-add>
 </div>
 
+<div *ngIf="isAdding">
+  <app-admin-student-add [studentDialog]="studentDialog" (newStudent)="updateAddedStudents()">
+  </app-admin-student-add>
+</div>
+
+
 <div *ngIf="isEditing">
-  <app-admin-student-edit 
-  [studentId]="student.id" 
-  [email]="student.email" 
-  [firstName]="student.firstName" 
-  [lastName]="student.lastName" 
-  [password]="student.password"
-  [courses]="student.courses"
-  (editedStudentInfo)="updateEditedStudent($event)"></app-admin-student-edit>
+  <app-admin-student-edit [studentDialog]="studentDialog" [student]="student"
+    (editedStudentInfo)="updateEditedStudent($event)">
+  </app-admin-student-edit>
 </div>

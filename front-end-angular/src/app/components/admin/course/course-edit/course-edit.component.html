@@ -1,8 +1,36 @@
-<form [formGroup]="editCourse" (ngSubmit)="onEditingCourse()">
+<!-- <form [formGroup]="editCourse" (ngSubmit)="onEditingCourse()">
 
     <input type="text" id="name" formControlName="courseName" [value]="courseName">
     <input type="text" id="desc" formControlName="courseDesc" [value]="courseDesc">
 
     <button type="submit">Edit Course</button>
 
-</form>
+</form> -->
+
+<p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true"
+    styleClass="p-fluid">
+
+
+    <!-- <ng-template pTemplate="content"> -->
+        <form [formGroup]="editCourse">
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" pInputText id="name" formControlName="courseName" required autofocus />
+                <small class="p-error" *ngIf="submitted && !course.courseName">Name is required.</small>
+            </div>
+            <div class="field">
+                <label for="description">Description</label>
+                <textarea id="description" pInputTextarea  required rows="3" formControlName="courseDesc"
+                    cols="20"></textarea>
+            </div>
+        </form>
+
+    <!-- </ng-template> -->
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="onEditingCourse()"></button>
+    </ng-template>
+
+</p-dialog>

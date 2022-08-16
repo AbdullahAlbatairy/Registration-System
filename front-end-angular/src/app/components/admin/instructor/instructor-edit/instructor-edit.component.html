@@ -1,4 +1,4 @@
-<form [formGroup]="editInstructor" (ngSubmit)="onEditingInstructor()">
+<!-- <form [formGroup]="editInstructor" (ngSubmit)="onEditingInstructor()">
     <input type="email" id="email" formControlName="email" placeholder="Instructor Email">
     <input type="text" id="firstName" formControlName="firstName" placeholder="First Name">
     <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
@@ -6,4 +6,41 @@
 
     <button type="submit">Edit Instructor</button>
 
-</form>
+</form> -->
+
+
+<p-dialog [(visible)]="instructorDialog" [style]="{width: '450px'}" header="Instructor Details" [modal]="true"
+    styleClass="p-fluid">
+
+
+    <!-- <ng-template pTemplate="content"> -->
+        <form [formGroup]="editInstructor">
+            <div class="field">
+                <label for="firstName">First Name</label>
+                <input type="text" pInputText id="firstName" formControlName="firstName" required autofocus />
+                <small class="p-error" *ngIf="submitted && !instructor.firstName">First Name is required</small> 
+            </div>
+            <div class="field">
+                <label for="lastName">Last Name</label>
+                <input type="text" pInputText id="lastName" formControlName="lastName" required autofocus />
+                <small class="p-error" *ngIf="submitted && !instructor.lastName">Last Name is required</small> 
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" pInputText id="email" formControlName="email" required autofocus />
+                <small class="p-error" *ngIf="submitted && !instructor.firstName">Email is required</small> 
+            </div>
+            
+            
+            
+        </form>
+
+    <!-- </ng-template> -->
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+            (click)="onEditingInstructor()"></button>
+    </ng-template>
+
+</p-dialog>

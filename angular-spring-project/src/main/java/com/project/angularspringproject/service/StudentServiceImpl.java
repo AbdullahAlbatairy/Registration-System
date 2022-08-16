@@ -62,6 +62,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Override
 	@Transactional
+	public void update(Student student) {
+		studentDAO.save(student);		
+	}
+	
+	@Override
+	@Transactional
 	public void saveCourseToStudnet(int studentId, Course course) {
 		studentDAO.saveCourseToStudnet(studentId,course);
 
@@ -72,6 +78,9 @@ public class StudentServiceImpl implements StudentService {
 	public void deleteById(int id) {
 		studentDAO.deleteById(id);
 	}
+
+
+	
 
 	
 

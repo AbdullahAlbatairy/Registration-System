@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Instructor } from 'src/app/models/instructor.model';
 import { AdminInstructorService } from 'src/app/services/admin/instructor/instructor.service';
 
@@ -11,10 +12,13 @@ import { AdminInstructorService } from 'src/app/services/admin/instructor/instru
 export class AdminInstructorAddComponent implements OnInit {
   addInstructor: FormGroup;
   instructor: Instructor;
+  @Input() instructorDialog: boolean;
+  submitted: boolean;
   isClicked = false;
   @Output() newInstructor = new EventEmitter<Instructor>;
 
-  constructor(private instructorService: AdminInstructorService) { }
+  constructor(private instructorService: AdminInstructorService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.addInstructor = new FormGroup({
@@ -50,9 +54,15 @@ export class AdminInstructorAddComponent implements OnInit {
     this.instructorService.addAnInstructor(this.instructor).subscribe(
       () => {
         this.newInstructor.emit(this.instructor);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Instructor Has been added', life: 3000 });
+
       }
     );
 
   }
 
+  hideDialog() {
+    this.instructorDialog = false;
+    this.submitted = false;
+  }
 }
