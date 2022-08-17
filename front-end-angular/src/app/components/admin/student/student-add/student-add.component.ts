@@ -15,6 +15,7 @@ export class AdminStudentAddComponent implements OnInit {
   submitted: boolean;
   @Input() studentDialog: boolean
   @Output() newStudent = new EventEmitter<Student>;
+  @Output() cancelStudent = new EventEmitter;
   isClicked = false;
   constructor(private studentService: AdminStudentService,
     private messageService: MessageService) { }
@@ -29,6 +30,7 @@ export class AdminStudentAddComponent implements OnInit {
   }
 
   onAddingStudent() {
+    this.isClicked = true
     if (this.addStudent.value.email == null
       || this.addStudent.value.firstName == null
       || this.addStudent.value.lastName == null
@@ -64,6 +66,7 @@ export class AdminStudentAddComponent implements OnInit {
   hideDialog() {
     this.studentDialog = false;
     this.submitted = false;
+    this.cancelStudent.emit()
   }
 
 }

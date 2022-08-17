@@ -1,16 +1,8 @@
-<!-- <form [formGroup]="editStudent" (ngSubmit)="onEditingStudent()">
-    <input type="email" id="email" formControlName="email" placeholder="Student Email">
-    <input type="text" id="firstName" formControlName="firstName" placeholder="First Name">
-    <input type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
-    <input type="password" id="password" formControlName="password" placeholder="Password">
 
-    <button type="submit">Edit Student</button>
-
-</form> -->
 
 
 <p-dialog [(visible)]="studentDialog" [style]="{width: '450px'}" header="Student Details" [modal]="true"
-    styleClass="p-fluid">
+    styleClass="p-fluid" (onHide)="hideDialog()">
 
 
     <!-- <ng-template pTemplate="content"> -->

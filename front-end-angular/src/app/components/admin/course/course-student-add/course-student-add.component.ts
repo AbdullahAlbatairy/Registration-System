@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Student } from 'src/app/models/student.model';
 import { AdminCourseService } from 'src/app/services/admin/course/course.service';
@@ -12,6 +12,8 @@ export class AdminCourseStudentAddComponent implements OnChanges {
   students: Student[];
   @Input() courseId?: number;
   @Input() studentDialog: boolean;
+  @Output() cancelStudent = new EventEmitter; 
+
   constructor(private courseService: AdminCourseService,
     private messageService: MessageService) { }
 
@@ -40,6 +42,10 @@ export class AdminCourseStudentAddComponent implements OnChanges {
       }
     )
 
+  }
+
+  hideDialog(){
+    this.cancelStudent.emit();
   }
 
 }

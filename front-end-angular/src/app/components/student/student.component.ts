@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { Course } from 'src/app/models/course.model';
 import { StudentCourseService } from 'src/app/services/student/course/course.service';
 
@@ -12,11 +13,19 @@ export class StudentComponent implements OnInit {
   isAdding = false;
   courses: Course[];
   studentId: number;
+  services: MenuItem[];
+  activeItem: MenuItem;
 
 
   constructor(private studentCourseService: StudentCourseService) { }
 
   ngOnInit(): void {
+    this.services = [
+      { label: "Courses", icon: 'pi pi-book', routerLink: "student-course-list",},
+
+    ]
+
+    this.activeItem = this.services[0];
   }
 
   updateCoursesRegistered(){

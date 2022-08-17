@@ -12,6 +12,7 @@ import { AdminStudentService } from 'src/app/services/admin/student/student.serv
 export class AdminStudentEditComponent implements OnInit {
   @Input() student: Student;
   @Input() studentDialog: boolean;
+  @Output() cancelStudent = new EventEmitter;
   submitted: boolean;
 
   @Output() editedStudentInfo = new EventEmitter<Student>;
@@ -48,6 +49,7 @@ export class AdminStudentEditComponent implements OnInit {
   hideDialog() {
     this.studentDialog = false;
     this.submitted = false;
+    this.cancelStudent.emit()
   }
 
 }

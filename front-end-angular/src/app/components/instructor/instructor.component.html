@@ -1,9 +1,6 @@
-<app-navbar></app-navbar>
-<button (click)="viewingCourses = !viewingCourses">Courses</button>
+<p-tabMenu [model]="services" [activeItem]="services[0]">
+</p-tabMenu>
 
-<div *ngIf="viewingCourses">
-    
-    <app-instructor-course-list></app-instructor-course-list>
 
-</div>
 
+<router-outlet></router-outlet>

@@ -1,36 +1,33 @@
-<!-- <p-dialog [(visible)]="instructorDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true"
-  styleClass="p-fluid">
-  <ul class="list-group">
-    <div *ngFor="let tempInstructor of instructors">
-      <li class="list-group-item">
-        {{tempInstructor.firstName}}
-        {{tempInstructor.lastName}}
-        <button pButton type="button" label="Add" class="p-button-text"></button>
-
-        
-
-
-      </li>
-    </div>
-  </ul>
-</p-dialog> -->
-
-<p-dialog [(visible)]="instructorDialog" [style]="{width: '450px'}" header="Instructors" [modal]="true"
-  styleClass="p-fluid">
+<p-dialog id="dialog" [(visible)]="instructorDialog" [style]="{width: '450px'}" header="Instructors" [modal]="true"
+  styleClass="p-fluid" (onHide)="hideDialog()">
 
   <p-table [value]="instructors">
-    
-  
+
+    <ng-template pTemplate="header">
+      <tr>
+
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Add</th>
+
+
+      </tr>
+
+    </ng-template>
+
+
     <ng-template pTemplate="body" let-instructor>
       <tr>
-        <td>{{ instructor.firstName }} {{ instructor.lastName }} 
+        <td>{{ instructor.firstName }}
         </td>
-        <td></td>
-        <td><button pButton pRipple icon="pi pi-plus" class="p-button-rounded mr-2" (click)="addInstructorToCourse(instructor.id)"></button></td>
+        <td>{{ instructor.lastName }}</td>
+
+        <td><button pButton pRipple icon="pi pi-plus" class="p-button-rounded mr-2 float-center"
+            (click)="addInstructorToCourse(instructor.id)"></button></td>
       </tr>
-  
+
     </ng-template>
   </p-table>
 
-  
+
 </p-dialog>

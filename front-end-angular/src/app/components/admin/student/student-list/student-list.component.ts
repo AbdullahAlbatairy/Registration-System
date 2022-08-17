@@ -69,15 +69,7 @@ export class AdminStudentListComponent implements OnInit {
     });
   }
 
-  // deleteAStudent(student: Student) {
-  //   this.isEditing = false;
-  //   this.isAdding = false;
-  //   this.studentService.deleteAStudent(student.id).subscribe(
-  //     () => {
-  //       this.updateDeletedStudent(student)
-  //     }
-  //   )
-  // }
+
 
   updateAddedStudents() {
     this.listStudents();
@@ -129,6 +121,13 @@ export class AdminStudentListComponent implements OnInit {
     });
 
 
+
+  }
+
+  cancel() {
+    this.isAdding = false;
+    this.isEditing = false;
+    this.studentDialog = false;
 
   }
 

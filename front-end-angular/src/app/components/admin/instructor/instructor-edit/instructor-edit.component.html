@@ -10,7 +10,7 @@
 
 
 <p-dialog [(visible)]="instructorDialog" [style]="{width: '450px'}" header="Instructor Details" [modal]="true"
-    styleClass="p-fluid">
+    styleClass="p-fluid" (onHide)="hideDialog()">
 
 
     <!-- <ng-template pTemplate="content"> -->

@@ -14,6 +14,7 @@ export class AdminInstructorEditComponent implements OnInit {
   @Input() instructor: Instructor;
   submitted: boolean;
   @Input() instructorDialog: boolean;
+  @Output() cancelInstructor = new EventEmitter;
 
 
   @Output() editedInstructorInfo = new EventEmitter<Instructor>;
@@ -51,6 +52,7 @@ export class AdminInstructorEditComponent implements OnInit {
   hideDialog() {
     this.instructorDialog = false;
     this.submitted = false;
+    this.cancelInstructor.emit();
   }
 
 }

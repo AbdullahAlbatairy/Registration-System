@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { Course } from 'src/app/models/course.model';
 import { Student } from 'src/app/models/student.model';
 import { InstructorCourseService } from 'src/app/services/instructor/course/course.service';
@@ -11,16 +13,19 @@ import { InstructorCourseService } from 'src/app/services/instructor/course/cour
 export class InstructorCourseListComponent implements OnInit {
   courses: Course[];
   students: Student[];
+  studentDialog: boolean;
   isViewingStudents = false;
 
-  constructor(private courseService: InstructorCourseService) { }
+  constructor(private courseService: InstructorCourseService,
+    private confirmationService: ConfirmationService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
     this.getAllCourseForInstructor();
   }
 
-  getAllCourseForInstructor(){
+  getAllCourseForInstructor() {
     this.courseService.getAllCourseForInstructor(localStorage.getItem('userId') as string).subscribe(
       courses => {
         this.courses = courses;
@@ -30,15 +35,35 @@ export class InstructorCourseListComponent implements OnInit {
 
   }
 
-  getAllStudentsForCourseForInstructor(courseId?: number){
+  getAllStudentsForCourseForInstructor(courseId?: number) {
+    this.studentDialog = true
     this.courseService.getAllStudentsForCourseForInstructor(courseId).subscribe(
-      students =>{
+      students => {
         this.students = students;
         this.isViewingStudents = true;
 
       }
-    ); 
+    );
 
   }
 
+  logout() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to log out?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userType");
+        this.router.navigate(['']);
+      }
+    });
+
+
+
+  }
+
+  onClose() {
+    this.isViewingStudents = false;
+  }
 }

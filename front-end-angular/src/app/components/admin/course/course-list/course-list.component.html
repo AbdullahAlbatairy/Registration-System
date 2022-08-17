@@ -1,56 +1,3 @@
-<!-- <ul class="list-group">
-  <div *ngFor="let tempCourse of courses">
-    <li class="list-group-item">
-      {{tempCourse.courseName}}
-      <button mat-raised-button color="primary"
-        (click)="editing(tempCourse.id, tempCourse.courseName, tempCourse.courseDesc)">Edit</button>
-      /
-      <button mat-raised-button color="primary" (click)="deleteACourse(tempCourse)">Delete</button>
-
-      /
-      <button mat-raised-button color="primary" (click)="addAnInstructor(tempCourse.id)">Add Instructor(s)</button>
-      /
-      <button mat-raised-button color="primary" (click)="viewInstructors(tempCourse.id)">View Instructor(s)</button>
-      /
-      <button mat-raised-button color="primary" (click)="addAStudent(tempCourse.id)">Add student(s)</button>
-      /
-      <button mat-raised-button color="primary" (click)="viewStudents(tempCourse.id)">View student(s)</button>
-
-    </li>
-  </div>
-</ul>
-
-<br>
-
-
-<button class="float-right" (click)="adding()">Add</button>
-
-<div *ngIf="isAdding">
-  <app-admin-course-add (newCourse)="updateAddedCourses($event)"></app-admin-course-add>
-</div>
-
-<div *ngIf="isEditing">
-  <app-admin-course-edit [courseId]="currentId" [courseName]="courseName" [courseDesc]="courseDesc"
-    (editedCourse)="updateEditedCourses($event)"></app-admin-course-edit>
-</div>
-
-<div *ngIf="isAddingInstructor">
-  <app-admin-course-instructors-add [courseId]="courseId"></app-admin-course-instructors-add>
-</div>
-
-<div *ngIf="isViewingInstructor">
-  <app-admin-course-instructor-list [courseId]="courseId"></app-admin-course-instructor-list>
-</div>
-
-<div *ngIf="isAddingStudent">
-  <app-admin-course-student-add [courseId]="courseId"></app-admin-course-student-add>
-</div>
-
-<div *ngIf="isViewingStudent">
-  <app-admin-course-student-list [courseId]="courseId"></app-admin-course-student-list>
-</div>  -->
-
-
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
@@ -68,8 +15,8 @@
 
   </p-toolbar>
 
-  <p-table #dt [value]="courses" [rows]="10" [paginator]="true"
-    responsiveLayout="scroll" [(selection)]="selectedCourses" [rowHover]="true" dataKey="id"
+  <p-table #dt [value]="courses" [rows]="10" [paginator]="true" responsiveLayout="scroll"
+    [(selection)]="selectedCourses" [rowHover]="true" dataKey="id"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
 
     <ng-template pTemplate="caption">
@@ -128,45 +75,36 @@
 
 </div>
 
-<!-- <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true" styleClass="p-fluid">
-  <ng-template pTemplate="content">
-    <div class="field">
-      <label for="name">Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="course.courseName" required autofocus />
-      <small class="p-error" *ngIf="submitted && !course.courseName">Name is required.</small>
-  </div>
-  <div class="field">
-    <label for="description">Description</label>
-    <textarea id="description" pInputTextarea [(ngModel)]="course.courseDesc" required rows="3" cols="20"></textarea>
-</div>
 
-  </ng-template>
-</p-dialog> -->
 
 <div *ngIf="isAdding">
-  <app-admin-course-add [courseDialog]="courseDialog" [course]="course" (newCourse)="updateAddedCourses($event)">
+  <app-admin-course-add [courseDialog]="courseDialog" [course]="course" (newCourse)="updateAddedCourses($event)"
+    (cancelCourse)="cancel()">
   </app-admin-course-add>
 </div>
 
 
 <div *ngIf="isEditing">
-  <app-admin-course-edit [courseDialog]="courseDialog" [course]="course" (editedCourse)="updateEditedCourses($event)">
+  <app-admin-course-edit [courseDialog]="courseDialog" [course]="course" (editedCourse)="updateEditedCourses($event)"
+    (cancelCourse)="cancel()">
   </app-admin-course-edit>
 </div>
 
 <div *ngIf="isAddingInstructor">
-  <app-admin-course-instructors-add [instructorDialog]="instructorDialog" [courseId]="courseId">
+  <app-admin-course-instructors-add [instructorDialog]="instructorDialog" [courseId]="courseId"
+    (cancelInstructor)="cancel()">
   </app-admin-course-instructors-add>
 </div>
 
 <div *ngIf="isViewingInstructor">
-  <app-admin-course-instructor-list [instructorDialog]="instructorDialog" [courseId]="courseId"></app-admin-course-instructor-list>
+  <app-admin-course-instructor-list [instructorDialog]="instructorDialog" [courseId]="courseId"
+    (cancelInstructor)="cancel()"></app-admin-course-instructor-list>
 </div>
 
 <div *ngIf="isAddingStudent">
-  <app-admin-course-student-add [studentDialog]="studentDialog" [courseId]="courseId"></app-admin-course-student-add>
+  <app-admin-course-student-add [studentDialog]="studentDialog" [courseId]="courseId" (cancelStudent)="cancel()"></app-admin-course-student-add>
 </div>
 
 <div *ngIf="isViewingStudent">
-  <app-admin-course-student-list [studentDialog]="studentDialog" [courseId]="courseId"></app-admin-course-student-list>
-</div>  
+  <app-admin-course-student-list [studentDialog]="studentDialog" [courseId]="courseId" (cancelStudent)="cancel()"></app-admin-course-student-list>
+</div>

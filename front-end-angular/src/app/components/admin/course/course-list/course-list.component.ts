@@ -44,18 +44,7 @@ export class AdminCourseListComponent implements OnInit {
 
   }
 
-  //   addSingle() {
-  //     this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
-  //   }
 
-  // addMultiple() {
-  //     this.messageService.addAll([{severity:'success', summary:'Service Message', detail:'Via MessageService'},
-  //                                 {severity:'info', summary:'Info Message', detail:'Via MessageService'}]);
-  //   }
-
-  // clear() {
-  //     this.messageService.clear();
-  //   }
 
   getAllCourses() {
     this.courseService.getAllCourses().subscribe(
@@ -83,6 +72,7 @@ export class AdminCourseListComponent implements OnInit {
   }
 
   editCourse(course: Course) {
+
     this.isEditing = true;
     this.isAdding = false;
     this.isAddingInstructor = false
@@ -99,11 +89,7 @@ export class AdminCourseListComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // this.courses = this.courses.filter(val => val.id !== course.id);
-        // this.course = {
-        //   courseName: "",
-        //   courseDesc: "",
-        // };
+
         this.courseService.deleteACourse(course.id).subscribe(
           () => {
             this.updateDeletedCourse(course)
@@ -114,26 +100,22 @@ export class AdminCourseListComponent implements OnInit {
     });
   }
 
-  // deleteACourse(course: Course) {
-  //   this.isEditing = false;
-  //   this.isAdding = false;
-  //   this.isAddingInstructor = false
-  //   this.isViewingInstructor = false
-  //   this.isAddingStudent = false;
-  //   this.isViewingStudent = false;
-  //   this.courseService.deleteACourse(course.id).subscribe(
-  //     () => {
-  //       this.updateDeletedCourse(course)
-  //     }
-  //   )
 
-  // }
 
 
   //Update Display 
   updateAddedCourses(course: Course) {
     this.getAllCourses();
 
+  }
+
+  cancel() {
+    this.isEditing = false;
+    this.isAdding = false;
+    this.isAddingInstructor = false
+    this.isViewingInstructor = false
+    this.isAddingStudent = false;
+    this.isViewingStudent = false;
   }
 
   updateEditedCourses(editedCourse: Course) {
@@ -180,6 +162,8 @@ export class AdminCourseListComponent implements OnInit {
   }
 
   addAStudent(courseId?: number) {
+    console.log(this.studentDialog);
+
     this.courseId = courseId;
     this.isAddingStudent = true;
     this.isAddingInstructor = false;

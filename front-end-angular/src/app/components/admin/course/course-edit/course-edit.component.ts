@@ -12,6 +12,7 @@ import { AdminCourseService } from 'src/app/services/admin/course/course.service
 export class AdminCourseEditComponent implements OnInit {
   @Input() course: Course;
   submitted: boolean;
+  @Output() cancelCourse = new EventEmitter;
   @Input() courseId: number;
   @Input() courseName: string;
   @Input() courseDesc: string;
@@ -53,5 +54,7 @@ export class AdminCourseEditComponent implements OnInit {
   hideDialog() {
     this.courseDialog = false;
     this.submitted = false;
+    this.cancelCourse.emit();
+
   }
 }

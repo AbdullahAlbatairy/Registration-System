@@ -114,4 +114,11 @@ export class AdminInstructorListComponent implements OnInit {
 
 
   }
+
+  cancel() {
+    this.isAdding = false;
+    this.isEditing = false;
+    this.instructorDialog = false;
+
+  }
 }

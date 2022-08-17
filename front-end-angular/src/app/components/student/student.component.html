@@ -1,5 +1,10 @@
-<app-navbar></app-navbar>
-<app-student-course-list [courses]="courses"></app-student-course-list>
+<p-tabMenu [model]="services" [activeItem]="services[0]">
+</p-tabMenu>
+
+
+
+<router-outlet></router-outlet>
+<!-- <app-student-course-list [courses]="courses"></app-student-course-list>
 
 <br>
 <button (click)="isAdding = true">Add new course</button>
@@ -7,4 +12,4 @@
 
 <div *ngIf="isAdding">
 <app-student-course-add (addedCourse)="updateCoursesRegistered()"></app-student-course-add>
-</div>
+</div> -->

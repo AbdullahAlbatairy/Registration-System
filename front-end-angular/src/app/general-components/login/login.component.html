@@ -5,18 +5,23 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-              <span *ngIf="isNotExisting"
-                  class="help-block">email/password is wrong, please check again</span>
+              <span *ngIf="isNotExisting" class="help-block">
+                <p-message severity="error" text="email/password is wrong, please check again"></p-message>
+              </span>
+
+
+
               <h3 class="mb-5">Sign in</h3>
 
               <div class="form-outline mb-4">
                 <input type="email" id="email" class="form-control form-control-lg" formControlName="email"
                   placeholder="Email" />
-               
+
 
                 <div *ngIf="isClicked">
-                  <span *ngIf="!signInForm.get('email')?.valid && signInForm.get('email')?.touched || signInForm.get('email')?.value == null"
-                  class="help-block">Please enter a valid email</span>
+                  <span
+                    *ngIf="!signInForm.get('email')?.valid && signInForm.get('email')?.touched || signInForm.get('email')?.value == null"
+                    class="help-block">Please enter a valid email</span>
                 </div>
 
 

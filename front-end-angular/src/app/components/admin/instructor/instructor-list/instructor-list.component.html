@@ -41,7 +41,8 @@
 <div class="card">
   <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
-      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="addingInstructor()"></button>
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+        (click)="addingInstructor()"></button>
     </ng-template>
     <ng-template pTemplate="right">
       <button pButton pRipple label="Logout" class="p-button-danger mr-2" (click)="logout()"></button>
@@ -80,9 +81,9 @@
         <td>{{ instructor.lastName }}</td>
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-          (click)="editingInstructor(instructor)"></button>
+            (click)="editingInstructor(instructor)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-          (click)="deleteInstructor(instructor)"></button>
+            (click)="deleteInstructor(instructor)"></button>
         </td>
       </tr>
     </ng-template>
@@ -98,12 +99,14 @@
 </div>
 
 <div *ngIf="isAdding">
-  <app-admin-instructor-add [instructorDialog]="instructorDialog" (newInstructor)="updateAddedInstructors()">
+  <app-admin-instructor-add [instructorDialog]="instructorDialog" (newInstructor)="updateAddedInstructors()"
+    (cancelInstructor)="cancel()">
   </app-admin-instructor-add>
 </div>
 
 
 <div *ngIf="isEditing">
-  <app-admin-instructor-edit [instructorDialog]="instructorDialog" [instructor]="instructor" (editedInstructorInfo)="updateEditedInstructor($event)">
+  <app-admin-instructor-edit [instructorDialog]="instructorDialog" [instructor]="instructor"
+    (editedInstructorInfo)="updateEditedInstructor($event)" (cancelInstructor)="cancel()">
   </app-admin-instructor-edit>
 </div>

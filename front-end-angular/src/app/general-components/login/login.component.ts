@@ -10,6 +10,7 @@ import { Student } from 'src/app/models/student.model';
 import { User } from 'src/app/models/user.model';
 import { LoginService } from 'src/app/services/login/login.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("userId", data.admin.id);
           localStorage.setItem("userType", data.userType);
 
-          this.router.navigate(['admin'])
+          this.router.navigate(['admin/courses-list'])
 
 
         }
@@ -70,7 +71,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("userId", data.instructor.id);
           localStorage.setItem("userType", data.userType);
 
-          this.router.navigate(['instructor'])
+          this.router.navigate(['instructor/instructor-course-list'])
 
 
         }
@@ -89,7 +90,7 @@ export class LoginComponent implements OnInit {
           
 
 
-          this.router.navigate(['student'])
+          this.router.navigate(['student/student-course-list'])
 
 
 

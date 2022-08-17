@@ -16,6 +16,7 @@ export class AdminInstructorAddComponent implements OnInit {
   submitted: boolean;
   isClicked = false;
   @Output() newInstructor = new EventEmitter<Instructor>;
+  @Output() cancelInstructor = new EventEmitter;
 
   constructor(private instructorService: AdminInstructorService,
     private messageService: MessageService) { }
@@ -31,6 +32,7 @@ export class AdminInstructorAddComponent implements OnInit {
 
 
   onAddingInstructor() {
+    this.isClicked = true
     if(this.addInstructor.value.email == null 
       || this.addInstructor.value.firstName == null
       || this.addInstructor.value.lastName == null
@@ -64,5 +66,6 @@ export class AdminInstructorAddComponent implements OnInit {
   hideDialog() {
     this.instructorDialog = false;
     this.submitted = false;
+    this.cancelInstructor.emit();
   }
 }

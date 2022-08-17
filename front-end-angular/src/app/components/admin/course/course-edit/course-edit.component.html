@@ -8,7 +8,7 @@
 </form> -->
 
 <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true"
-    styleClass="p-fluid">
+    styleClass="p-fluid" (onHide)="hideDialog()">
 
 
     <!-- <ng-template pTemplate="content"> -->

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Course } from 'src/app/models/course.model';
 import { StudentCourseService } from 'src/app/services/student/course/course.service';
 
@@ -10,8 +11,11 @@ import { StudentCourseService } from 'src/app/services/student/course/course.ser
 export class StudentCourseAddComponent implements OnInit {
   courses: Course[];
   studentId: number;
+  @Input() studentDialog: boolean
   @Output() addedCourse = new EventEmitter<Course>;
-  constructor(private studentCourseService: StudentCourseService) { }
+  @Output() courseDialogHide = new EventEmitter;
+  constructor(private studentCourseService: StudentCourseService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getAllCoursesForStudentAvailable();
@@ -19,7 +23,7 @@ export class StudentCourseAddComponent implements OnInit {
   }
 
 
-  getAllCoursesForStudentAvailable(){
+  getAllCoursesForStudentAvailable() {
     this.studentCourseService.getAllCoursesForStudentAvailable(localStorage.getItem('userId') as string).subscribe(
       courses => {
         this.courses = courses;
@@ -29,17 +33,21 @@ export class StudentCourseAddComponent implements OnInit {
 
   }
 
-  addNewCourseToStudent(addedCourse: Course){
+  addNewCourseToStudent(addedCourse: Course) {
     this.studentCourseService.addCourseToStudent(localStorage.getItem('userId') as string, addedCourse).subscribe(
-      ()=>{
-        //update available courses for the student
-        var foundIndex = this.courses.findIndex(course => course.id ==addedCourse.id)
+      () => {
+        var foundIndex = this.courses.findIndex(course => course.id == addedCourse.id)
         this.courses.splice(foundIndex, 1);
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Course Has been added', life: 3000 });
 
-        //update register courses for the student
         this.addedCourse.emit();
       }
     );
+
+  }
+
+  hideDialog() {
+    this.courseDialogHide.emit();
 
   }
 

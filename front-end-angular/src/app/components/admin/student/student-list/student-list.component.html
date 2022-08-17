@@ -61,13 +61,14 @@
 </div>
 
 <div *ngIf="isAdding">
-  <app-admin-student-add [studentDialog]="studentDialog" (newStudent)="updateAddedStudents()">
+  <app-admin-student-add [studentDialog]="studentDialog" (newStudent)="updateAddedStudents()"
+    (cancelStudent)="cancel()">
   </app-admin-student-add>
 </div>
 
 
 <div *ngIf="isEditing">
   <app-admin-student-edit [studentDialog]="studentDialog" [student]="student"
-    (editedStudentInfo)="updateEditedStudent($event)">
+    (editedStudentInfo)="updateEditedStudent($event)" (cancelStudent)="cancel()">
   </app-admin-student-edit>
 </div>

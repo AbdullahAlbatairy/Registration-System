@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Student } from 'src/app/models/student.model';
 
 @Component({
@@ -8,10 +8,16 @@ import { Student } from 'src/app/models/student.model';
 })
 export class InstructorStudentListComponent implements OnInit {
   @Input() students: Student[];
+  @Input() studentDialog: boolean;
+  @Output() closeStudent = new EventEmitter;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  hideDialog() {
+    this.closeStudent.emit()
   }
 
 }

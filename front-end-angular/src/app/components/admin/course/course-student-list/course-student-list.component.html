@@ -1,28 +1,27 @@
-<!-- <ul class="list-group">
-    <div *ngFor="let tempStudent of students">
-      <li class="list-group-item">
-        {{tempStudent.firstName}}
-        {{tempStudent.lastName}}
-
-        <button mat-raised-button color="primary"
-        (click)="deleteStudentFromCourse(tempStudent.id)">Delete</button>
-        
-        </li>
-    </div>
-  </ul> -->
-
 <p-dialog [(visible)]="studentDialog" [style]="{width: '450px'}" header="Instructors" [modal]="true"
-  styleClass="p-fluid">
+  styleClass="p-fluid" (onHide)="hideDialog()">
 
   <p-table [value]="students">
+
+    <ng-template pTemplate="header">
+      <tr>
+
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Delete</th>
+
+
+      </tr>
+
+    </ng-template>
 
 
     <ng-template pTemplate="body" let-student>
       <tr>
-        <td>{{ student.firstName }} {{ student.lastName }}
+        <td>{{ student.firstName }}
         </td>
-        <td></td>
-        <td><button pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-rounded mr-2"
+        <td>{{ student.lastName }}</td>
+        <td><button pButton pRipple icon="pi pi-trash" class="p-button-danger p-button-rounded mr-2 float-center"
             (click)="deleteStudentFromCourse(student.id)"></button></td>
       </tr>
 

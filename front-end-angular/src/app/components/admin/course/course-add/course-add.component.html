@@ -28,7 +28,7 @@ class="help-block">Please enter a valid Course Description</span>
 </form> -->
 
 <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true"
-styleClass="p-fluid">
+styleClass="p-fluid" (onHide)="hideDialog()">
     <form [formGroup]="addCourse">
         <div>
 

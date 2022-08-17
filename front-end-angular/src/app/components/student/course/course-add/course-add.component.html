@@ -1,11 +1,42 @@
-<ul class="list-group">
-    <div *ngFor="let tempCourse of courses">
-      <li class="list-group-item">
-        {{tempCourse.courseName}}   
-        /
-        <button (click)="addNewCourseToStudent(tempCourse)">Add</button>
-        
+<p-dialog id="dialog" [(visible)]="studentDialog" [style]="{width: '450px'}" header="Courses" [modal]="true"
+  styleClass="p-fluid" (onHide)="hideDialog()">
+
+  <p-table [value]="courses">
+
+    <ng-template pTemplate="header">
+      <tr>
+
+        <th>Course Name</th>
+        <th>Course Description</th>
+        <th>Add</th>
+
+
+      </tr>
+
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-course>
+      <tr>
+        <td>{{ course.courseName }}
+        </td>
+        <td>{{ course.courseDesc }}</td>
+
+        <td><button pButton pRipple icon="pi pi-plus" class="p-button-rounded mr-2 float-center"
+            (click)="addNewCourseToStudent(course)"></button></td>
+      </tr>
+
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-course>
+      <tr>
+        <td>
+           No Courses Found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
   
-      </li>
-    </div>
-</ul>
+
+
+</p-dialog>

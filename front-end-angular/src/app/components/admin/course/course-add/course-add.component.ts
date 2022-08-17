@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Course } from 'src/app/models/course.model';
@@ -14,12 +14,15 @@ export class AdminCourseAddComponent implements OnInit {
   @Input() courseDialog: boolean;
   submitted: boolean;
   addCourse: FormGroup;
-  @Input() course: Course; 
+  @Input() course: Course;
   isClicked = false;
   @Output() newCourse = new EventEmitter<Course>;
+  @Output() cancelCourse = new EventEmitter;
 
-  
-  constructor(private courseService: AdminCourseService, private messageService: MessageService) { }
+
+  constructor(private courseService: AdminCourseService,
+    private messageService: MessageService) { }
+
 
   ngOnInit(): void {
     this.addCourse = new FormGroup({
@@ -30,12 +33,13 @@ export class AdminCourseAddComponent implements OnInit {
   }
 
   onAddingCourse() {
-    if(this.addCourse.value.courseName == null 
+    this.isClicked = true
+    if (this.addCourse.value.courseName == null
       || this.addCourse.value.courseDesc == null
-      
-      || !this.addCourse.get('courseName')?.valid 
+
+      || !this.addCourse.get('courseName')?.valid
       && this.addCourse.get('courseName')?.touched
-      || !this.addCourse.get('courseDesc')?.valid 
+      || !this.addCourse.get('courseDesc')?.valid
       && this.addCourse.get('courseDesc')?.touched
     ) return;
 
@@ -45,10 +49,10 @@ export class AdminCourseAddComponent implements OnInit {
     };
 
     this.courseService.addACourse(this.course).subscribe(
-      ()=> {
-          this.newCourse.emit(this.course);
-          this.courseDialog = false;
-          this.messageService.add({severity:'success', summary: 'Successful', detail: 'New Course Has been added', life: 3000});
+      () => {
+        this.newCourse.emit(this.course);
+        this.courseDialog = false;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'New Course Has been added', life: 3000 });
 
       }
     );
@@ -58,6 +62,10 @@ export class AdminCourseAddComponent implements OnInit {
   hideDialog() {
     this.courseDialog = false;
     this.submitted = false;
+    this.cancelCourse.emit();
   }
+
+
+  
 
 }

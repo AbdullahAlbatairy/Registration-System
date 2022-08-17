@@ -49,6 +49,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TabMenuModule } from 'primeng/tabmenu';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 
 const routes: Routes = [
@@ -70,7 +72,9 @@ const routes: Routes = [
   },
 
   {
-    path: 'student', component: StudentComponent,
+    path: 'student', component: StudentComponent, children: [
+      { path: 'student-course-list', component: StudentCourseListComponent }
+    ],
 
     canActivate: [StudentRouteGuard]
   },
@@ -122,6 +126,8 @@ const routes: Routes = [
     ConfirmDialogModule,
     TabMenuModule,
     BrowserAnimationsModule,
+    MessagesModule,
+    MessageModule,
     RouterModule.forRoot(routes)
 
   ],
