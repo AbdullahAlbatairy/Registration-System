@@ -14,48 +14,52 @@
 
   </p-toolbar>
 
-  <p-table #dt [value]="students" [rows]="10" [paginator]="true" [globalFilterFields]="['firstName', 'lastName']"
-    responsiveLayout="scroll" [rowHover]="true" dataKey="id"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+  <div class="container">
 
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Students</h5>
+    <p-table #dt [value]="students" [rows]="10" [paginator]="true" [globalFilterFields]="['firstName', 'lastName']"
+      responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+  
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <h5 class="m-0">Students</h5>
+  
+        </div>
+      </ng-template>
+  
+      <ng-template pTemplate="header">
+        <tr>
+  
+          <th>First Name
+          </th>
+          <th>Last Name </th>
+          <th></th>
+  
+        </tr>
+      </ng-template>
+  
+      <ng-template pTemplate="body" let-student>
+        <tr>
+  
+          <td>{{ student.firstName }}</td>
+          <td>{{ student.lastName }}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              (click)="editingStudent(student)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+              (click)="deleteStudent(student)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are {{students ? students.length : 0 }} students.
+        </div>
+      </ng-template>
+  
+    </p-table>
+  </div>
 
-      </div>
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-
-        <th>First Name
-        </th>
-        <th>Last Name </th>
-        <th></th>
-
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-student>
-      <tr>
-
-        <td>{{ student.firstName }}</td>
-        <td>{{ student.lastName }}</td>
-        <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-            (click)="editingStudent(student)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-            (click)="deleteStudent(student)"></button>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between">
-        In total there are {{students ? students.length : 0 }} instructors.
-      </div>
-    </ng-template>
-
-  </p-table>
 
 
 </div>

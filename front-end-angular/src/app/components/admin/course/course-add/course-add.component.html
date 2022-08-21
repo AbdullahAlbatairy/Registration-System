@@ -1,32 +1,3 @@
-<!-- <form [formGroup]="addCourse" (ngSubmit)="onAddingCourse()">
-
-    
-   
-   <div>
-
-       <input type="text" id="name" formControlName="courseName" placeholder="Course Name">
-   </div>
-   <div *ngIf="isClicked">
-    <span
-*ngIf="!addCourse.get('courseName')?.valid && addCourse.get('courseName')?.touched || addCourse.get('courseName')?.value == null"
-class="help-block">Please enter a valid Course Name</span>
-</div>
-   <br>
-   <div>
-
-       <input type="text" id="desc" formControlName="courseDesc" placeholder="Course Desc">
-   </div>
-   <div *ngIf="isClicked">
-    <span
-*ngIf="!addCourse.get('courseDesc')?.valid && addCourse.get('courseDesc')?.touched || addCourse.get('courseDesc')?.value == null"
-class="help-block">Please enter a valid Course Description</span>
-</div>
-   
-
-    <button  (click)="isClicked = true" type="submit">Add Course</button>
-
-</form> -->
-
 <p-dialog [(visible)]="courseDialog" [style]="{width: '450px'}" header="Course Details" [modal]="true"
 styleClass="p-fluid" (onHide)="hideDialog()">
     <form [formGroup]="addCourse">

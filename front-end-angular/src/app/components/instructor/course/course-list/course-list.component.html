@@ -12,49 +12,55 @@
 
 
   </p-toolbar>
-
-  <p-table #dt [value]="courses" [rows]="10" [paginator]="true" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-
-    <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Courses</h5>
-
-      </div>
-    </ng-template>
-
-    <ng-template pTemplate="header">
-      <tr>
-
-        <th>Name</th>
-        <th>Description</th>
-        <th>Students</th>
-
-      </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-course>
-      <tr>
-
-        <td>{{ course.courseName }}</td>
-        <td>{{ course.courseDesc }}</td>
-        <td>
-          <button pButton pRipple icon="pi pi-user" class="p-button-rounded p-button-success mr-2"
-            (click)="getAllStudentsForCourseForInstructor(course.id)"></button>
-
-
-        </td>
-
-
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between">
-        In total there are {{courses ? courses.length : 0 }} courses.
-      </div>
-    </ng-template>
-
-  </p-table>
+  
+  
+  <div class="container">
+    
+      <p-table #dt [value]="courses" [rows]="10" [paginator]="true" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    
+        <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+            <h5 class="m-0">Courses</h5>
+    
+          </div>
+        </ng-template>
+    
+        <ng-template pTemplate="header">
+          <tr>
+    
+            <th>Name</th>
+            <th>Description</th>
+            <th>Students</th>
+    
+          </tr>
+        </ng-template>
+    
+        <ng-template pTemplate="body" let-course>
+          <tr>
+    
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.courseDesc }}</td>
+            <td>
+              <button pButton pRipple icon="pi pi-user" class="p-button-rounded p-button-success mr-2"
+                (click)="getAllStudentsForCourseForInstructor(course.id)"></button>
+    
+    
+            </td>
+    
+    
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total there are {{courses ? courses.length : 0 }} courses.
+          </div>
+        </ng-template>
+    
+      </p-table>
+    
+  </div>
+  
 
 
 </div>
