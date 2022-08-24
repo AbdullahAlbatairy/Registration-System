@@ -24,14 +24,13 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	@Transactional
 	public List<Admin> findAll() {
-		// TODO Auto-generated method stub
 		return adminDao.findAll();
 	}
 
 	@Override
 	@Transactional
 	public Admin findById(int id) {
-		// TODO Auto-generated method stub
+	
 		return adminDao.findById(id);
 	}
 
