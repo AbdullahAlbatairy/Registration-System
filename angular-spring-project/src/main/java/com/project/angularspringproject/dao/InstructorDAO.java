@@ -2,8 +2,7 @@ package com.project.angularspringproject.dao;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 
 import com.project.angularspringproject.entity.Course;
 import com.project.angularspringproject.entity.Instructor;

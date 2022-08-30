@@ -40,6 +40,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
+	@Transactional
 	public List<Course> findAllCoursesAvailable(int studentId) {
 		return this.studentDAO.findAllCoursesAvailable(studentId);
 

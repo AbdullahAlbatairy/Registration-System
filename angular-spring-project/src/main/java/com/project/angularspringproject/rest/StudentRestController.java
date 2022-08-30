@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.angularspringproject.dao.StudentDAO;
 import com.project.angularspringproject.entity.Course;
 import com.project.angularspringproject.entity.Student;
 import com.project.angularspringproject.service.StudentService;

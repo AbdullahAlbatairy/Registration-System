@@ -44,19 +44,18 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    if(this.signInForm.value.email == null 
+    if (this.signInForm.value.email == null
       || this.signInForm.value.password == null
-      || !this.signInForm.get('email')?.valid 
+      || !this.signInForm.get('email')?.valid
       && this.signInForm.get('email')?.touched
-      || !this.signInForm.get('password')?.valid 
+      || !this.signInForm.get('password')?.valid
       && this.signInForm.get('password')?.touched) return;
 
-    
+
     this.loginService.getUser(this.signInForm).subscribe(
       data => {
         if (data.userType == 1) {
           this.isNotExisting = false;
-          this.adminRouteGuard.userType = 1
 
           localStorage.setItem("userId", data.admin.id);
           localStorage.setItem("userType", data.userType);
@@ -65,9 +64,8 @@ export class LoginComponent implements OnInit {
 
 
         }
-       else if (data.userType == 2) {
-        this.isNotExisting = false;
-          this.instructorRouteGuard.userType = 2
+        else if (data.userType == 2) {
+          this.isNotExisting = false;
           localStorage.setItem("userId", data.instructor.id);
           localStorage.setItem("userType", data.userType);
 
@@ -79,25 +77,23 @@ export class LoginComponent implements OnInit {
         else if (data.userType == 3) {
           this.isNotExisting = false;
 
-          
 
-          
-          this.studentGuard.userType = 3;
+
 
           localStorage.setItem("userId", data.student.id);
           localStorage.setItem("userType", data.userType);
 
-          
+
 
 
           this.router.navigate(['student/student-course-list'])
 
 
 
-        } else{
-          
+        } else {
+
           this.isNotExisting = true;
-          
+
         }
 
 

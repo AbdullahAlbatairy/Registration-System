@@ -13,9 +13,8 @@ export class AdminRouteGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
     
-    if(localStorage.getItem("userType") == "1"){console.log("true");
+    if(localStorage.getItem("userType") == "1"){
       return true};
-      console.log(false);
       
     return false;
   }

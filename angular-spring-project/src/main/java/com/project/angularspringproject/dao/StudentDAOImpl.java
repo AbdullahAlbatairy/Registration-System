@@ -9,10 +9,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.project.angularspringproject.entity.Course;
-import com.project.angularspringproject.entity.Instructor;
 import com.project.angularspringproject.entity.Student;
 
 @Repository
@@ -101,7 +99,7 @@ public class StudentDAOImpl implements StudentDAO {
 	public void deleteById(int id) {
 		Session currentSession = entityManager.unwrap(Session.class);
 
-		Query<Student> theQuery = currentSession.createQuery("delete from Student where id =:studentId");
+		Query<Student> theQuery = currentSession.createQuery("delete from Student where id =:studentId", Student.class);
 
 		theQuery.setParameter("studentId", id);
 

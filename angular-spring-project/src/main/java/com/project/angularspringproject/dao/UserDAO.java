@@ -1,20 +1,20 @@
 package com.project.angularspringproject.dao;
 
-import java.util.List;
 
-import com.project.angularspringproject.entity.Admin;
-import com.project.angularspringproject.entity.Instructor;
-import com.project.angularspringproject.entity.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
 import com.project.angularspringproject.entity.User;
 
-public interface UserDAO{
-	public List<User> findAll();
+@Repository
+public interface UserDAO extends JpaRepository<User, Integer>{
 	
-	public User findById(int id);
+	@Query("from User where email =:email")
+	public User findUser(@Param("email") String email);
 	
-	public void deleteById(int id);
-
-	public User findUser(String email, String password);
+	
 
 
 	

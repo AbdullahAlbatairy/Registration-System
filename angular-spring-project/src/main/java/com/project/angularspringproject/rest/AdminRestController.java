@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.angularspringproject.dao.AdminDAO;
 import com.project.angularspringproject.entity.Admin;
 import com.project.angularspringproject.service.AdminService;
 
